@@ -1,0 +1,447 @@
+/* =========================
+   LOGIN PAGE — login.css
+========================= */
+
+@font-face {
+    font-family: "dfont";
+    src: url("../assets/fonts/dfont.ttf") format("truetype");
+    font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Overridden at runtime by js/cms.js (see /admin > Login & Register) */
+    --brand: #3880bc;
+    --login-bg: linear-gradient( 168deg, #4a95cf 0%, #3880bc 22%, #2f6d9f 52%, #2a5f8c 78%, #24506f 100%);
+    --login-card-bg: #ffffff;
+    --login-card-border: #ffffff;
+    --login-title: #3880bc;
+    --login-text: #222222;
+    --login-input-bg: #ffffff;
+    --login-input-text: #333333;
+    --login-input-border: #d4dbe2;
+    --login-icon-bg: #e2e5ea;
+    --login-icon-fg: #3b4450;
+    --login-btn-bg: #3880bc;
+    --login-btn-text: #ffffff;
+    --login-footer-bg: #3880bc;
+    --login-footer-text: #ffffff;
+    --wa-green: #25d366;
+    --card-w: 350px;
+    --in-h: 46px;
+    --radius: 4px;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    font-family: "dfont", Arial, sans-serif;
+    font-size: 14px;
+    color: var(--login-text);
+}
+
+
+/* Full-height column so footer pins to bottom */
+
+.login-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--login-bg);
+    background-attachment: fixed;
+}
+
+
+/* ---- MAIN — content packed to the TOP (matches reference) ---- */
+
+.login-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 8px 16px 28px;
+}
+
+
+/* ---- LOGO ---- */
+
+.login-logo {
+    display: block;
+    max-height: 96px;
+    max-width: 260px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 14px;
+}
+
+/* An author display value outranks the UA rule for [hidden]; the logo
+   stays hidden until the CMS supplies an uploaded image. */
+
+.login-logo[hidden] {
+    display: none;
+}
+
+
+/* ---- CARD ---- */
+
+.login-card {
+    background: var(--login-card-bg);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 8px 30px rgba(255,255,255,0.6);
+    width: var(--card-w);
+    max-width: 100%;
+    padding: 20px 14px 18px;
+}
+
+
+/* ---- TITLE ---- */
+
+.login-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--login-title);
+    margin-bottom: 20px;
+    letter-spacing: 0;
+}
+
+.login-title .t-icon {
+    font-size: 1.25rem;
+    color: var(--login-title);
+    flex-shrink: 0;
+}
+
+
+/* ---- FORM ---- */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+/* Input row: field + icon box */
+
+.input-row {
+    display: flex;
+    border-radius: var(--radius);
+    height: var(--in-h);
+}
+
+.input-row input {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid var(--login-input-border);
+    border-right: none;
+    border-radius: var(--radius) 0 0 var(--radius);
+    outline: none;
+    padding: 0 12px;
+    font-size: 15px;
+    color: var(--login-input-text);
+    background: var(--login-input-bg);
+    font-family: inherit;
+}
+
+.input-row input:focus {
+    border-color: #9dbdd8;
+}
+
+.input-row input::placeholder {
+    color: #7b8794;
+    font-size: 15px;
+}
+
+.input-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    flex-shrink: 0;
+    background: var(--login-icon-bg);
+    border: 1px solid var(--login-icon-bg);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    color: var(--login-icon-fg);
+    font-size: 16px;
+}
+
+
+/* ---- LOGIN BUTTON ---- */
+
+.btn-login-submit {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--in-h);
+    background: var(--login-btn-bg);
+    color: var(--login-btn-text);
+    border: none;
+    border-radius: 0;
+    font-size: 17px;
+    font-weight: 400;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 2px;
+    padding: 0 14px;
+    transition: background 0.15s;
+}
+
+.btn-login-submit:hover {
+    background: #2f6d9f;
+}
+
+.btn-login-text {
+    flex: 1;
+    text-align: center;
+}
+
+.btn-login-icon {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+
+/* ---- FORGOT PASSWORD ---- */
+
+.forgot-row {
+    text-align: right;
+    margin-top: 8px;
+}
+
+.forgot-link {
+    font-size: 13px;
+    color: var(--brand);
+    text-decoration: underline;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+    padding: 0;
+}
+
+.forgot-link:hover {
+    color: #2a5f8c;
+}
+
+
+/* ---- REGISTER — no divider line (matches reference) ---- */
+
+.register-row {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 16px;
+    padding-top: 0;
+    border-top: none;
+}
+
+.register-row .reg-label {
+    color: #111;
+    font-weight: 700;
+}
+
+.register-row a {
+    color: var(--brand);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.register-row a:hover {
+    text-decoration: underline;
+}
+
+
+/* ---- DOWNLOAD APK — visible on every screen size ---- */
+
+.apk-row {
+    text-align: center;
+    margin-top: 18px;
+}
+
+.apk-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--brand);
+    text-decoration: none;
+}
+
+.apk-link:hover {
+    text-decoration: underline;
+}
+
+.apk-link i {
+    font-size: 14px;
+    color: var(--brand);
+}
+
+
+/* ---- FOOTER ---- */
+
+.login-footer {
+    flex-shrink: 0;
+    background: var(--login-footer-bg);
+    padding: 16px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+
+/* Legal links row */
+
+.footer-legal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.footer-legal a {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+
+/* Support block — WhatsApp badge sits left, text centred */
+
+.footer-support {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.footer-support-label {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--login-footer-text);
+    letter-spacing: 0.2px;
+}
+
+.footer-phone {
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-phone:hover {
+    text-decoration: underline;
+}
+
+.footer-wa-btn {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+    color: #fff;
+    font-size: 26px;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.footer-wa-btn:hover {
+    background: rgba(255, 255, 255, 0.34);
+}
+
+
+/* Social row */
+
+.footer-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #fff;
+    font-size: 17px;
+    text-decoration: none;
+    transition: transform 0.15s;
+}
+
+.footer-social a:hover {
+    transform: translateY(-2px);
+}
+
+.fs-fb { color: #1877f2; }
+.fs-ig { color: #c13584; }
+.fs-tg { color: #229ed9; }
+.fs-x  { color: #111111; }
+.fs-wa { color: #25d366; }
+.fs-web{ color: #3880bc; }
+
+
+/* =========================
+   MOBILE ≤ 480px
+========================= */
+
+@media (max-width: 480px) {
+    .login-main {
+        padding: 8px 14px 20px;
+    }
+    .login-logo {
+        max-height: 78px;
+        max-width: 205px;
+        margin-bottom: 12px;
+    }
+    /* Original site hides the APK link on mobile */
+    .apk-row {
+        display: none;
+    }
+    .login-card {
+        width: calc(100% - 12px);
+        max-width: 350px;
+        padding: 18px 12px 16px;
+    }
+    .footer-legal a {
+        font-size: 13px;
+    }
+    .footer-wa-btn {
+        width: 46px;
+        height: 46px;
+        font-size: 23px;
+        left: 2px;
+    }
+}

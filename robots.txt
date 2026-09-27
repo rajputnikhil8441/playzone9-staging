@@ -1,0 +1,17 @@
+# GENERATED FILE - do not edit by hand.
+# Written by tools/build-site.js for the "staging" environment.
+#
+# STAGING / REVIEW HOST. This is a copy of Playzone9 served on
+# playzones9.com so it can be reviewed before its production domain
+# is ever connected. It must never appear in a search result.
+#
+# Every page also carries <meta name="robots" content="noindex,nofollow">.
+# Both are here on purpose: the Disallow below stops a crawl, and the meta
+# tag is what removes a URL that was reached some other way -- a Disallow
+# alone cannot keep a linked URL out of the index.
+#
+# There is deliberately no Sitemap: line and no sitemap.xml. A sitemap
+# exists to invite a crawl, and nothing here should be crawled.
+
+User-agent: *
+Disallow: /
