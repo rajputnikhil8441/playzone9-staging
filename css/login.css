@@ -445,3 +445,48 @@ body {
         left: 2px;
     }
 }
+
+
+
+
+
+
+
+
+/* Animated notification adapted from Website 1 */
+.top-alert {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(360px, calc(100% - 32px));
+    padding: 14px 18px;
+    background: #d93025;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-family: inherit;
+    border-radius: 4px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: top 0.3s ease, opacity 0.3s ease;
+}
+
+.top-alert.show {
+    top: 16px;
+    opacity: 1;
+}
+
+/* Local demo result; does not change the login card layout */
+.login-demo-message {
+    margin-top: 12px;
+    color: #287a3d;
+    text-align: center;
+    font-size: 13px;
+}
+
+.login-demo-message[hidden] {
+    display: none;
+}
